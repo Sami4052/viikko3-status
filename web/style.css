@@ -1,0 +1,73 @@
+/* Viikko 3 - tilaraportin ja dokumentaation yhteinen tyyli */
+:root {
+  --bg: #0f1419;
+  --panel: #171e26;
+  --border: #26313d;
+  --text: #d6dde4;
+  --muted: #8a96a3;
+  --accent: #4fc1ff;
+  --ok: #3fb950;
+  --warn: #d29922;
+  --todo: #ffd866;
+  --mono: "JetBrains Mono", "Consolas", "Courier New", monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+}
+
+main { max-width: 960px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+
+.prompt { font-family: var(--mono); color: var(--accent); margin: 0 0 .25rem; }
+h1 { margin: 0 0 .5rem; font-size: 1.9rem; }
+h2 { font-size: 1.15rem; margin: 2rem 0 .75rem; color: var(--accent); }
+.meta { color: var(--muted); margin: 0; }
+.meta strong { color: var(--text); font-family: var(--mono); }
+
+/* Raporttikortit */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+.card h2 { margin: 0 0 .4rem; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.card .value { margin: 0; font-size: 1.5rem; font-family: var(--mono); }
+.card .hint { margin: .5rem 0 0; font-size: .8rem; color: var(--muted); }
+
+.bar { height: 8px; background: var(--border); border-radius: 4px; margin-top: .75rem; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--accent); }
+
+.status.ok      { border-color: var(--ok); }
+.status.ok .value { color: var(--ok); }
+.status.warning { border-color: var(--warn); }
+.status.warning .value { color: var(--warn); }
+
+/* Navigaatio ja alatunniste */
+nav { margin-top: 2rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+a { color: var(--accent); }
+footer { margin-top: 2rem; color: var(--muted); font-size: .85rem; }
+
+/* Dokumentaatiosivu */
+section.doc { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: .25rem 1.5rem 1.25rem; margin-top: 1.25rem; }
+code, pre { font-family: var(--mono); }
+code { background: var(--bg); padding: .1rem .35rem; border-radius: 4px; }
+pre { background: var(--bg); padding: .75rem 1rem; border-radius: 6px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; margin: .5rem 0; }
+th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+
+/* Täytettävät kohdat - näkyvät heti, jos jää täyttämättä */
+.todo { background: rgba(255, 216, 102, .15); color: var(--todo); padding: 0 .3rem; border-radius: 3px; }

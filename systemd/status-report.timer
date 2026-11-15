@@ -1,0 +1,18 @@
+# Käynnistää status-report.servicen minuutin välein.
+# Käyttöön: sudo systemctl enable --now status-report.timer
+
+[Unit]
+Description=Ajaa tilaraportin minuutin välein
+
+[Timer]
+# Jokaisen minuutin alussa (sama kuin OnCalendar=minutely)
+OnCalendar=*-*-* *:*:00
+# Oletustarkkuus on 1 min, jolloin ajo voi viivästyä. 1 s pitää aikataulun tasaisena.
+AccuracySec=1s
+# Ajetaan myös heti käynnistyksen jälkeen, ettei sivu jää vanhaksi
+OnBootSec=15s
+Unit=status-report.service
+
+[Install]
+# Kytkee timerin timers.targetiin -> käynnistyy automaattisesti rebootin jälkeen
+WantedBy=timers.target

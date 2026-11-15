@@ -1,0 +1,12 @@
+# Ajaa tilaraporttiskriptin kerran. status-report.timer käynnistää tämän.
+# Asennus: sudo cp systemd/status-report.* /etc/systemd/system/
+
+[Unit]
+Description=Viikko 3: palvelimen tilaraportin generointi
+
+[Service]
+# oneshot = ajetaan kerran loppuun, ei jää taustalle pyörimään
+Type=oneshot
+# Käyttäjä, jolla on kirjoitusoikeus /var/www/viikko3-hakemistoon (tarkista: whoami)
+User=ubuntu
+ExecStart=/home/ubuntu/viikko3-status/status-report.sh

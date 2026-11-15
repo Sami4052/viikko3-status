@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Viikko 3 - dokumentaatio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <p class="prompt">$ cat docs.html</p>
+    <h1>Viikko 3: Bash ja palvelimen tilaraportti</h1>
+    <p class="meta"><a href="./">&larr; Takaisin raporttiin</a> &middot;
+      <a href="https://github.com/KAYTTAJA/viikko3-status">GitHub-repositorio</a></p>
+  </header>
+
+  <!-- Etsi lopuksi kaikki täyttämättömät kohdat: grep -n TÄYDENNÄ docs.html -->
+
+  <section class="doc">
+    <h2>1. Käyttämiäni komentoja</h2>
+    <table>
+      <tr><th>Komento</th><th>Mitä se tekee</th></tr>
+      <tr>
+        <td><code><span class="todo">[TÄYDENNÄ: komento 1]</span></code></td>
+        <td><span class="todo">[TÄYDENNÄ: lyhyt selitys omin sanoin]</span></td>
+      </tr>
+      <tr>
+        <td><code><span class="todo">[TÄYDENNÄ: komento 2]</span></code></td>
+        <td><span class="todo">[TÄYDENNÄ]</span></td>
+      </tr>
+      <tr>
+        <td><code><span class="todo">[TÄYDENNÄ: komento 3 PUTKELLA, esim. levyn käyttöaste]</span></code></td>
+        <td><span class="todo">[TÄYDENNÄ: selitä mitä kukin putken osa tekee]</span></td>
+      </tr>
+    </table>
+  </section>
+
+  <section class="doc">
+    <h2>2. Miten toteutus toimii</h2>
+    <h3>Skripti</h3>
+    <p><span class="todo">[TÄYDENNÄ 2-4 lausetta: mistä tiedot kerätään (date, uptime, df, free), miten ne tallennetaan muuttujiin $(...)-komentokorvauksella ja miten HTML kirjoitetaan (write_html-funktio, valiaikaistiedosto + mv)]</span></p>
+    <h3>Levytilan tilalogiikka</h3>
+    <p><span class="todo">[TÄYDENNÄ: disk_status-funktio, if-lause, raja 80 %, miksi -ge eikä -gt]</span></p>
+    <h3>Ajastus</h3>
+    <p><span class="todo">[TÄYDENNÄ: systemd-timer käynnistää status-report.servicen minuutin välein (OnCalendar), service ajaa skriptin kerran (Type=oneshot), ja enable + WantedBy=timers.target pitää ajastuksen päällä uudelleenkäynnistyksen jälkeen]</span></p>
+  </section>
+
+  <section class="doc">
+    <h2>3. Testitulokset</h2>
+    <table>
+      <tr><th>Testi</th><th>Odotettu</th><th>Tulos</th></tr>
+      <tr><td><code>bash -n status-report.sh</code></td><td>ei tulostetta</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
+      <tr><td>Ajo käsin + raportti selaimessa</td><td>sivu näkyy, tiedot oikein</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
+      <tr><td><code>./status-report.sh --test 50</code></td><td>OK</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
+      <tr><td><code>./status-report.sh --test 80</code></td><td>WARNING</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
+      <tr><td><code>./status-report.sh --test 90</code></td><td>WARNING</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
+      <tr><td>Automaattinen päivitys 1</td><td>uusi generointiaika</td><td><span class="todo">[TÄYDENNÄ: kellonaika]</span></td></tr>
+      <tr><td>Automaattinen päivitys 2</td><td>uusi generointiaika</td><td><span class="todo">[TÄYDENNÄ: kellonaika]</span></td></tr>
+      <tr><td>Uudelleenkäynnistys (<code>sudo reboot</code>)</td><td>sivu aukeaa, päivitykset jatkuvat</td><td><span class="todo">[TÄYDENNÄ: uptime nollaantui, generointiaika jatkoi päivittymistä]</span></td></tr>
+    </table>
+    <p>Testitila ei kirjoita raporttia, joten julkisella sivulla näkyy koko ajan oikea käyttöaste. Erillistä palautusta ei tarvita.</p>
+  </section>
+
+  <section class="doc">
+    <h2>4. Ongelma ja ratkaisu / mitä opin</h2>
+    <p><span class="todo">[TÄYDENNÄ: yksi oikea ongelma ja miten ratkaisit sen, tai yksi asia jonka opit]</span></p>
+  </section>
+
+  <footer>Tekijä: <span class="todo">[TÄYDENNÄ: nimi tai nimimerkki]</span> &middot; Oamk, Linux Administration</footer>
+</main>
+</body>
+</html>
