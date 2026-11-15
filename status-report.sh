@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # status-report.sh - Viikkotehtävä 3: palvelimen tilaraportti
-#
+///#
 # Kerää palvelimen perustiedot ja kirjoittaa ne HTML-sivuksi.
 # systemd-timer ajaa tämän skriptin minuutin välein.
 #
@@ -16,7 +16,7 @@ OUTPUT_DIR="${OUTPUT_DIR:-/var/www/viikko3}"   # voi ohittaa testatessa: OUTPUT_
 OUTPUT_FILE="${OUTPUT_DIR}/index.html"
 TMP_FILE="${OUTPUT_FILE}.tmp"
 WARN_LIMIT=80                                   # varoitusraja prosentteina
-GITHUB_URL="https://github.com/Sami4052/viikko3-status"   # TODO 0: vaihda oma repo-osoite
+GITHUB_URL="https://github.com/Sami4052/viikko3-status"
 
 # --- Funktiot -----------------------------------------------------------------
 
@@ -25,11 +25,12 @@ GITHUB_URL="https://github.com/Sami4052/viikko3-status"   # TODO 0: vaihda oma r
 disk_status() {
     local usage="$1"
 
-    # TODO 5: Kirjoita if-lause tähän ja poista alla oleva echo "TODO".
-    #   - jos usage on vähintään WARN_LIMIT -> echo "WARNING"
-    #   - muuten                            -> echo "OK"
-    #   Vihje: kokonaislukujen vertailu [ "$a" -ge "$b" ]   (-ge = greater or equal)
-    echo "TODO"
+    #if-lauseke varoitukselle
+    if [ "$usage" -ge "$WARN_LIMIT" ]; then
+        echo "WARNING"
+    else
+        echo "OK"
+    fi
 }
 
 # write_html: kirjoittaa raportin väliaikaistiedostoon ja siirtää sen paikalleen.
@@ -100,28 +101,23 @@ if [[ "${1:-}" == "--test" ]]; then
 fi
 
 # --- Tietojen keruu -----------------------------------------------------------
-# Korvaa jokainen "TODO" komentokorvauksella $( ... ).
-# Kokeile komento ensin terminaalissa ja kopioi vasta toimiva versio tänne.
 
-# TODO 1: Päivämäärä, kellonaika ja aikavyöhyke, esim. "16.11.2026 08:42:10 EET"
-#   Vihje: date + muotoilumerkkijono. Katso `man date`: %d %m %Y %H %M %S %Z
-GENERATED="TODO"
+#   Päivämäärä, kellonaika ja aikavyöhyke
+GENERATED=$(date '+%d.%m.%Y %H:%M:%S %Z')
 
-# TODO 2: Palvelimen käynnissäoloaika, esim. "up 3 days, 4 hours, 12 minutes"
+#   Palvelimen käynnissäoloaika, esim. "up 3 days, 4 hours, 12 minutes"
 #   Vihje: uptime-komennolla on valitsin "pretty"-muodolle (`uptime --help`)
-UPTIME="TODO"
+UPTIME=$(uptime -p)
 
-# TODO 3: Juurilevyn (/) käyttöaste PELKKÄNÄ NUMERONA, esim. 23
+#   Juurilevyn (/) käyttöaste PELKKÄNÄ NUMERONA, esim. 23
 #   Vihje: `df /` tulostaa otsikkorivin ja datarivin. Tarvitset datarivin
 #   Use%-sarakkeen ilman %-merkkia. Rakenne: df / | awk '...' | tr ...
 #   awk: NR==2 valitsee 2. rivin, $5 viidennen sarakkeen. tr -d poistaa merkin.
-DISK_USAGE="TODO"
+DISK_USAGE=$(df / | awk 'NR==2 {print $5}' | tr -d '%')
 
-# TODO 4: RAM yhteensä ja käytettävissä megatavuina (MiB), pelkät numerot
-#   Vihje: `free -m`, rivi joka alkaa "Mem:". Sarakkeet total ja available.
-#   awk '/^Mem:/ {print $N}' - selvitä oikeat sarakenumerot itse.
-RAM_TOTAL="TODO"
-RAM_AVAILABLE="TODO"
+#   RAM yhteensä ja käytettävissä megatavuina (MiB), pelkät numerot
+RAM_TOTAL=$(free -m | awk '/^Mem:/ {print $2}')
+RAM_AVAILABLE=$(free -m | awk '/^Mem:/ {print $7}')
 
 # --- Tila ja raportti ---------------------------------------------------------
 DISK_STATUS=$(disk_status "$DISK_USAGE")
