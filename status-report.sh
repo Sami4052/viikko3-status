@@ -16,7 +16,7 @@ OUTPUT_DIR="${OUTPUT_DIR:-/var/www/viikko3}"   # voi ohittaa testatessa: OUTPUT_
 OUTPUT_FILE="${OUTPUT_DIR}/index.html"
 TMP_FILE="${OUTPUT_FILE}.tmp"
 WARN_LIMIT=80                                   # varoitusraja prosentteina
-GITHUB_URL="https://github.com/KAYTTAJA/viikko3-status"   # TODO 0: vaihda oma repo-osoite
+GITHUB_URL="https://github.com/Sami4052/viikko3-status"   # TODO 0: vaihda oma repo-osoite
 
 # --- Funktiot -----------------------------------------------------------------
 
