@@ -15,59 +15,55 @@
       <a href="https://github.com/Sami4052/viikko3-status">GitHub-repositorio</a></p>
   </header>
 
-  <!-- Etsi lopuksi kaikki täyttämättömät kohdat: grep -n TÄYDENNÄ docs.html -->
-
   <section class="doc">
     <h2>1. Käyttämiäni komentoja</h2>
     <table>
       <tr><th>Komento</th><th>Mitä se tekee</th></tr>
-      <tr>
-        <td><code><span class="todo">[TÄYDENNÄ: komento 1]</span></code></td>
-        <td><span class="todo">[TÄYDENNÄ: lyhyt selitys omin sanoin]</span></td>
-      </tr>
-      <tr>
-        <td><code><span class="todo">[TÄYDENNÄ: komento 2]</span></code></td>
-        <td><span class="todo">[TÄYDENNÄ]</span></td>
-      </tr>
-      <tr>
-        <td><code><span class="todo">[TÄYDENNÄ: komento 3 PUTKELLA, esim. levyn käyttöaste]</span></code></td>
-        <td><span class="todo">[TÄYDENNÄ: selitä mitä kukin putken osa tekee]</span></td>
-      </tr>
+      <tr><td><code>date '+%d.%m.%Y %H:%M:%S %Z'</code></td>
+          <td>Tulostaa päivämäärän, kellonajan ja aikavyöhykkeen suomalaisessa muodossa. %Z näyttää aikavyöhykkeen lyhenteen (EET).</td></tr>
+      <tr><td><code>uptime -p</code></td>
+          <td>Näyttää palvelimen käynnissäoloajan luettavassa muodossa, esim. "up 2 hours, 5 minutes".</td></tr>
+      <tr><td><code>df / | awk 'NR==2 {print $5}' | tr -d '%'</code></td>
+          <td>Putki: df näyttää juurilevyn tiedot, awk valitsee toisen rivin viidennen sarakkeen (Use%) ja tr poistaa %-merkin, jolloin jäljelle jää pelkkä luku vertailua varten.</td></tr>
+      <tr><td><code>free -m | awk '/^Mem:/ {print $2}'</code></td>
+          <td>Putki: free näyttää muistin megatavuina, awk poimii Mem-alkuiselta riviltä toisen sarakkeen eli RAMin kokonaismäärän. Sarake 7 antaa käytettävissä olevan muistin.</td></tr>
+      <tr><td><code>systemctl list-timers status-report.timer</code></td>
+          <td>Näyttää, milloin ajastus ajettiin viimeksi ja milloin seuraavaksi.</td></tr>
     </table>
   </section>
 
   <section class="doc">
     <h2>2. Miten toteutus toimii</h2>
     <h3>Skripti</h3>
-    <p><span class="todo">[TÄYDENNÄ 2-4 lausetta: mistä tiedot kerätään (date, uptime, df, free), miten ne tallennetaan muuttujiin $(...)-komentokorvauksella ja miten HTML kirjoitetaan (write_html-funktio, valiaikaistiedosto + mv)]</span></p>
+    <p>Bash-skripti status-report.sh kerää tiedot komennoilla date, uptime, df ja free ja tallentaa tulokset muuttujiin komentokorvauksella $(...). Funktio write_html kirjoittaa HTML-sivun ensin väliaikaistiedostoon ja siirtää sen mv-komennolla paikalleen, jotta selain ei koskaan näe puolivalmista sivua.</p>
     <h3>Levytilan tilalogiikka</h3>
-    <p><span class="todo">[TÄYDENNÄ: disk_status-funktio, if-lause, raja 80 %, miksi -ge eikä -gt]</span></p>
+    <p>Funktio disk_status saa levyn käyttöasteen parametrina ja vertaa sitä if-lauseella 80 %:n rajaan. Jos käyttö on vähintään 80 % (-ge), tila on WARNING, muuten OK. Vertailuoperaattori -ge valittiin, koska tehtävän mukaan tasan 80 % on jo varoitus.</p>
     <h3>Ajastus</h3>
-    <p><span class="todo">[TÄYDENNÄ: systemd-timer käynnistää status-report.servicen minuutin välein (OnCalendar), service ajaa skriptin kerran (Type=oneshot), ja enable + WantedBy=timers.target pitää ajastuksen päällä uudelleenkäynnistyksen jälkeen]</span></p>
+    <p>Ajastus on toteutettu systemd-timerilla. status-report.timer käynnistää status-report.servicen jokaisen minuutin alussa (OnCalendar), ja service ajaa skriptin kerran (Type=oneshot). Timer on otettu käyttöön komennolla systemctl enable, ja WantedBy=timers.target käynnistää sen automaattisesti myös uudelleenkäynnistyksen jälkeen. Nginx julkaisee raportin polusta /viikko3/ omalla location-lohkollaan, joten viikon 2 sovellus toimii edelleen omassa osoitteessaan.</p>
   </section>
 
   <section class="doc">
     <h2>3. Testitulokset</h2>
     <table>
       <tr><th>Testi</th><th>Odotettu</th><th>Tulos</th></tr>
-      <tr><td><code>bash -n status-report.sh</code></td><td>ei tulostetta</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
-      <tr><td>Ajo käsin + raportti selaimessa</td><td>sivu näkyy, tiedot oikein</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
-      <tr><td><code>./status-report.sh --test 50</code></td><td>OK</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
-      <tr><td><code>./status-report.sh --test 80</code></td><td>WARNING</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
-      <tr><td><code>./status-report.sh --test 90</code></td><td>WARNING</td><td><span class="todo">[TÄYDENNÄ]</span></td></tr>
-      <tr><td>Automaattinen päivitys 1</td><td>uusi generointiaika</td><td><span class="todo">[TÄYDENNÄ: kellonaika]</span></td></tr>
-      <tr><td>Automaattinen päivitys 2</td><td>uusi generointiaika</td><td><span class="todo">[TÄYDENNÄ: kellonaika]</span></td></tr>
-      <tr><td>Uudelleenkäynnistys (<code>sudo reboot</code>)</td><td>sivu aukeaa, päivitykset jatkuvat</td><td><span class="todo">[TÄYDENNÄ: uptime nollaantui, generointiaika jatkoi päivittymistä]</span></td></tr>
+      <tr><td><code>bash -n status-report.sh</code></td><td>ei tulostetta</td><td>OK, ei syntaksivirheitä</td></tr>
+      <tr><td>Ajo käsin ja raportti selaimessa</td><td>sivu näkyy, tiedot oikein</td><td>OK</td></tr>
+      <tr><td><code>./status-report.sh --test 50</code></td><td>OK</td><td>OK</td></tr>
+      <tr><td><code>./status-report.sh --test 80</code></td><td>WARNING</td><td>WARNING</td></tr>
+      <tr><td><code>./status-report.sh --test 90</code></td><td>WARNING</td><td>WARNING</td></tr>
+      <tr><td>Automaattinen päivitys 1</td><td>uusi generointiaika</td><td>OK, 13:21:00</td></tr>
+      <tr><td>Automaattinen päivitys 2</td><td>uusi generointiaika</td><td>OK, 13:22:00</td></tr>
+      <tr><td>Uudelleenkäynnistys (<code>sudo reboot</code>)</td><td>sivu aukeaa, päivitykset jatkuvat</td><td>OK: uptime ennen 19h,4min, jälkeen 0h,1min. Raportti päivittyi rebootin jälkeen klo 13:20:00.</td></tr>
     </table>
-    <p>Testitila ei kirjoita raporttia, joten julkisella sivulla näkyy koko ajan oikea käyttöaste. Erillistä palautusta ei tarvita.</p>
+    <p>Testitila (--test) syöttää annetun prosentin suoraan tilalogiikalle eikä kirjoita raporttia, joten julkisella sivulla näkyy koko ajan oikea käyttöaste eikä arvoja tarvinnut palauttaa jälkikäteen.</p>
   </section>
 
   <section class="doc">
-    <h2>4. Ongelma ja ratkaisu / mitä opin</h2>
-    <p><span class="todo">[TÄYDENNÄ: yksi oikea ongelma ja miten ratkaisit sen, tai yksi asia jonka opit]</span></p>
+    <h2>4. Ongelma ja ratkaisu</h2>
+    <p>Palvelimen huoltokatkon jälkeen SSH-yhteys antoi virheen "Permission denied (publickey)". ssh -v -tulosteesta näkyi, ettei SSH tarjonnut palvelimelle yhtään avainta, koska -i-valitsin osoitti .ssh-kansioon eikä avaintiedostoon. Lisäksi Windows piilotti avaintiedoston .txt-päätteen. Ongelma ratkesi, kun annoin koko tiedostonimen: <code>ssh -i ~/.ssh/samivm-key.txt ubuntu@IP</code>.</p>
   </section>
 
-  <footer>Tekijä: <span class="todo">[TÄYDENNÄ: nimi tai nimimerkki]</span> &middot; Oamk, Linux Administration</footer>
+  <footer>Tekijä: Sami Lumijärvi &middot; Oamk, Linux Administration</footer>
 </main>
 </body>
 </html>
